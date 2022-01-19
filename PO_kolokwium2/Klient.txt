@@ -1,0 +1,46 @@
+import java.time.LocalDate;
+import java.util.*;
+import java.io.*;
+
+import java.time.LocalDate;
+
+public class Klient implements Cloneable, Comparable<Klient> {
+
+    private String nazwa;
+    private LocalDate dataZakupy;
+    private Double rachunek;
+
+    public Klient(String nazwa, LocalDate dataZakupy, double rachunek) {
+        this.nazwa = nazwa;
+        this.dataZakupy = dataZakupy;
+        this.rachunek = rachunek;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public LocalDate getDataZakupy() {
+        return dataZakupy;
+    }
+
+    public double getRachunek() {
+        return rachunek;
+    }
+
+    @Override
+    public String toString() {
+        return "Nazwa " + nazwa + " data zakupu " + dataZakupy + " kwota rachunku " + rachunek + "z³";
+    }
+
+    @Override
+    public int compareTo(Klient o) {
+        int result = dataZakupy.compareTo(o.dataZakupy);
+        if (result == 0) {
+            result = nazwa.compareTo(o.nazwa);
+            if (result == 0)
+                result = rachunek.compareTo(o.rachunek);
+        }
+        return result;
+    }
+}

@@ -1,0 +1,56 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        Klient klient1 = new Klient("Kononowicz", LocalDate.of(2022, 01, 04), 300.0);
+        Klient klient2 = new Klient("Najman", LocalDate.of(2022, 01, 04), 350.0);
+        Klient klient3 = new Klient("Maklowicz", LocalDate.of(2022, 01, 25), 200.0);
+        Klient klient4 = new Klient("Rokita", LocalDate.of(2022, 01, 10), 200.0);
+        Klient klient5 = new Klient("Ziobro", LocalDate.of(2022, 01, 12), 400.0);
+        Klient klient6 = new Klient("Ziobro", LocalDate.of(2022, 01, 15), 450.0);
+        ArrayList<Klient> grupa = new ArrayList<Klient>();
+        grupa.add(klient1);
+        grupa.add(klient2);
+        grupa.add(klient3);
+        grupa.add(klient4);
+        grupa.add(klient5);
+        grupa.add(klient6);
+        grupa.forEach(klient -> {
+            System.out.println(klient.toString());
+        });
+        grupa.sort(Klient::compareTo);
+        grupa.forEach(klient -> {
+            System.out.println(klient.toString());
+        });
+        System.out.println(discountAmount(klient1));
+        System.out.println(discountAmount(klient2));
+        System.out.println(discountMap(grupa));
+
+
+    }
+
+    public static Double discountAmount(Klient k) {
+        ObslugaKlienta.setProcentRabatu();
+        if (k.getRachunek() > 300) {
+            Double result = ObslugaKlienta.procentRabatu * k.getRachunek();
+            return result;
+        }
+        return null;
+    }
+
+    public static Map<Double, String> discountMap(ArrayList<Klient> klients) {
+        Map<Double, String> mapa = new HashMap<Double, String>();
+        klients.forEach(klient -> {
+            Double result = discountAmount(klient);
+            if (result != null) {
+                mapa.put(result, klient.getNazwa());
+            }
+        });
+        return mapa;
+    }
+}
